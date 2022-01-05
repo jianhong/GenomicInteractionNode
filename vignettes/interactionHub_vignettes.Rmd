@@ -1,0 +1,88 @@
+---
+title: "interactionHub Guide"
+author: "Jianhong Ou, Yu Xiang, Xiaolin Wei, and Yarui Diao"
+date: "`r doc_date()`"
+package: "`r pkg_ver('interactionHub')`"
+vignette: >
+  %\VignetteIndexEntry{interactionHub Vignette}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+output:
+  BiocStyle::html_document
+---
+
+```{r, echo=FALSE, results="hide", warning=FALSE}
+suppressPackageStartupMessages({
+  library(interactionHub)
+  library(rtracklayer)
+  library(TxDb.Hsapiens.UCSC.hg19.knownGene) 
+  library(org.Hs.eg.db)
+})
+knitr::opts_chunk$set(warning=FALSE, message=FALSE)
+```
+
+# Introduction
+ 
+# Installation
+You can install the package via `devtools::install_github` from `github`.
+```{r devtoolsInstallation, eval=FALSE}
+library(devtools)
+install_github("jianhong/interactionHub")
+```
+
+You can also try to install it via `BiocManager::install` when it is ready in Bioconductor.
+```{r BiocManagerInstallation, eval=FALSE}
+library(BiocManager)
+install("interactionHub")
+```
+
+# Quick start
+Here is an example to use interactionHub to define interaction hot
+spots and do downstream enrichment analysis.
+
+There are three steps, 
+1. `detectHubs`, define the hubs.
+2. `annoHubs`, annotate the hubs for downstream analysis.
+3. `enrichAna`, Gene Ontology enrichment analysis.
+
+```{r quickStart}
+## load library
+library(interactionHub)
+library(rtracklayer)
+library(TxDb.Hsapiens.UCSC.hg19.knownGene) ## for human hg19
+library(org.Hs.eg.db) ## used to convert gene_id to gene_symbol
+library(GO.db) ## used for enrichment analysis
+
+## import the interactions from bedpe file
+p <- system.file("extdata", "WT.2.bedpe",
+                 package = "interactionHub")
+#### please try to replace the connection to your file path
+interactions <- import(con=p, format="bedpe")
+
+## define the hubs
+hubs <- detectHubs(interactions)
+names(hubs)
+lapply(hubs, head, n=2)
+
+## annotate the hubs by gene promoters
+hub_regions <- hubs$hub_regions
+hub_regions <- annoHubs(hub_regions,
+                        txdb=TxDb.Hsapiens.UCSC.hg19.knownGene,
+                        orgDb=org.Hs.eg.db,
+                        upstream=2000, downstream=500)
+head(hub_regions, n=2)
+
+## Gene Ontology enrichment analysis
+enrich <- enrichAna(hub_regions, orgDb=org.Hs.eg.db)
+names(enrich$enriched)
+names(enrich$enriched_in_compound)
+res <- enrich$enriched$BP
+res <- res[order(res$fdr), ]
+head(res, n=2)
+```
+
+# Session Info
+```{r sessionInfo}
+sessionInfo()
+```
+
