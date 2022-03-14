@@ -22,7 +22,35 @@ knitr::opts_chunk$set(warning=FALSE, message=FALSE)
 ```
 
 # Introduction
- 
+
+The profiles of genome interactions can be categorized into three levels:
+loops, domains and compartments.
+Cis-regulatory elements (cREs) regulate the distal target gene expression through three-dimensional chromatin looping.
+Most of these loops occur withing the boundaries of topologically
+associating domains (TADs).
+HiC analysis revealed the TADs can be segregated into an active (A)
+and inactive (B) compartment. 
+TADs are megabase-sized chromosomal regions where the loop sizes may 
+very from thousand bases to mega bases.
+We know that not all the loops within one TADs are involved in single
+binding platform.
+There are hundreds or even thousands binding platforms even in a single TAD.
+For each binding platform, multiple loops may work together to work
+as a single function, such as repress or promote one or more 
+distal target gene expression.
+We defined such kind of binding platform as genomic interaction hub or
+interaction hot spot.
+The interaction hub has two attributes:
+1. it must contain multiple interaction loops,
+2. it regulates one or more target genes.
+
+To help users to define the interaction hubs, we developed the 
+`Bioconductor` package: `interacionHub`.
+The `interactionHub` package will define the interaction hub
+by testing the involved loops within one connected component
+by Poisson distribution. The annotated loops will be used for 
+enrichment analysis.
+
 # Installation
 You can install the package via `devtools::install_github` from `github`.
 ```{r devtoolsInstallation, eval=FALSE}
@@ -37,12 +65,15 @@ install("interactionHub")
 ```
 
 # Quick start
-Here is an example to use interactionHub to define interaction hot
-spots and do downstream enrichment analysis.
+Here is an example to use `interactionHub` to define interaction hubs
+and do downstream enrichment analysis.
 
-There are three steps, 
+There are three steps,
+
 1. `detectHubs`, define the hubs.
+
 2. `annoHubs`, annotate the hubs for downstream analysis.
+
 3. `enrichAna`, Gene Ontology enrichment analysis.
 
 ```{r quickStart}

@@ -33,6 +33,7 @@ annoHubs <- function(hub_regions,
   stopifnot(is(orgDb, "OrgDb"))
   stopifnot(is(upstream, "numeric"))
   stopifnot(is(downstream, "numeric"))
+  check_hub_region(hub_regions, "comp_id")
   ### annotation for promoter region only
   gene <- genes(txdb, ...)
   promoter <- promoters(gene,

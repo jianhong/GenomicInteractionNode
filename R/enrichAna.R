@@ -75,10 +75,14 @@ enrichAna <- function(hub_regions, orgDb, onto=c("BP", "CC", "MF"),
 }
 
 ## enrichment analysis help functions
-check_hub_region <- function(hub_regions){
+check_hub_region <- function(hub_regions, check_col=c("comp_id", "gene_id")){
   stopifnot(is(hub_regions, "GRanges"))
-  stopifnot(length(hub_regions)==length(hub_regions$comp_id))
-  stopifnot(length(hub_regions)==length(hub_regions$gene_id))
+  for(j in check_col){
+    if(length(hub_regions)!=length(mcols(hub_regions)[, j])){
+      stop("hug_regions does not contain metadata",
+           j)
+    }
+  }
 }
 ## add ancestors
 addAncestors <- function(go_eg, onto){

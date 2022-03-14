@@ -50,7 +50,7 @@ detectHubs <- function(interaction, pval_cutoff=0.05, ...){
   edgeL <- split(olm[,2], olm[,1])
   edgeL <- lapply(edgeL, unique)
   nodes <- names(regions)
-  gR <- new("graphNEL", nodes=nodes, edgeL=edgeL)
+  gR <- new("graphNEL", nodes=nodes, edgeL=edgeL)## there is an issue, the nodes and edgeL have limits
   Merged <- connectedComp(ugraph(gR))
   len <- lengths(Merged)
   ## cut by p value, giant component from Erdos-Renyi random graph

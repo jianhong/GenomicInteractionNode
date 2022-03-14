@@ -1,6 +1,6 @@
 Package: interactionHub
 Type: Package
-Version: 0.0.1
+Version: 0.99.0
 Title: A R/Bioconductor package to detect the interaction hub from
        HiC/HiChIP/HiCAR data
 Authors@R: c(person(given="Jianhong", family="Ou", email="jianhong.ou@duke.edu", 
@@ -8,13 +8,14 @@ Authors@R: c(person(given="Jianhong", family="Ou", email="jianhong.ou@duke.edu",
         person(given="Yarui", family="Diao", role="fnd"))
 Maintainer: Jianhong Ou <jianhong.ou@duke.edu>
 Description: The interactionHub package can import interactions from bedpe file
-        and define the interaction hubs, the hot interaction spots. The detected
-        interaction hubs will be annotated and enrich analized for downstream
-        validation.
+        and define the interaction hubs, the genomic interaction sites with
+        multiple interaction loops.
+        The interaction hub is a binding platform regulates one or multiple genes. 
+        The detected interaction hubs will be annotated for downstream validation.
 License: file LICENSE
 Depends: R (>= 4.1.0), stats
 Imports: AnnotationDbi, graph, GO.db, 
-        GenomicRanges, GenomeInfoDb, GenomicFeatures,
+        GenomicRanges, GenomicFeatures,
         methods,
         IRanges,
         RBGL,
@@ -23,7 +24,7 @@ Suggests: RUnit, BiocStyle, knitr, rmarkdown, rtracklayer, testthat,
         TxDb.Hsapiens.UCSC.hg19.knownGene, org.Hs.eg.db
 URL: https://github.com/jianhong/interactionHub
 BugReports: https://github.com/jianhong/interactionHub/issues
-biocViews: Visualization
+biocViews: HiC, Sequencing, Software 
 VignetteBuilder: knitr
 RoxygenNote: 7.1.2
 Encoding: UTF-8
