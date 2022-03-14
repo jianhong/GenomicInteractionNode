@@ -1,2 +1,2 @@
-# interactionHub
+# GenomicInteractionHub
 check the interaction hubs

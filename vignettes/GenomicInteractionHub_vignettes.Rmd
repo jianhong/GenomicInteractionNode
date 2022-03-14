@@ -1,5 +1,5 @@
 ---
-title: "interactionHub Guide"
+title: "GenomicInteractionHub Guide"
 author: "Jianhong Ou, Yu Xiang, Xiaolin Wei, and Yarui Diao"
 date: "`r doc_date()`"
 package: "`r pkg_ver('interactionHub')`"
@@ -13,7 +13,7 @@ output:
 
 ```{r, echo=FALSE, results="hide", warning=FALSE}
 suppressPackageStartupMessages({
-  library(interactionHub)
+  library(GenomicInteractionHub)
   library(rtracklayer)
   library(TxDb.Hsapiens.UCSC.hg19.knownGene) 
   library(org.Hs.eg.db)
@@ -45,8 +45,8 @@ The interaction hub has two attributes:
 2. it regulates one or more target genes.
 
 To help users to define the interaction hubs, we developed the 
-`Bioconductor` package: `interacionHub`.
-The `interactionHub` package will define the interaction hub
+`Bioconductor` package: `GenomicInteractionHub`.
+The `GenomicInteractionHub` package will define the interaction hub
 by testing the involved loops within one connected component
 by Poisson distribution. The annotated loops will be used for 
 enrichment analysis.
@@ -55,17 +55,17 @@ enrichment analysis.
 You can install the package via `devtools::install_github` from `github`.
 ```{r devtoolsInstallation, eval=FALSE}
 library(devtools)
-install_github("jianhong/interactionHub")
+install_github("jianhong/GenomicInteractionHub")
 ```
 
 You can also try to install it via `BiocManager::install` when it is ready in Bioconductor.
 ```{r BiocManagerInstallation, eval=FALSE}
 library(BiocManager)
-install("interactionHub")
+install("GenomicInteractionHub")
 ```
 
 # Quick start
-Here is an example to use `interactionHub` to define interaction hubs
+Here is an example to use `GenomicInteractionHub` to define interaction hubs
 and do downstream enrichment analysis.
 
 There are three steps,
@@ -78,7 +78,7 @@ There are three steps,
 
 ```{r quickStart}
 ## load library
-library(interactionHub)
+library(GenomicInteractionHub)
 library(rtracklayer)
 library(TxDb.Hsapiens.UCSC.hg19.knownGene) ## for human hg19
 library(org.Hs.eg.db) ## used to convert gene_id to gene_symbol
@@ -86,7 +86,7 @@ library(GO.db) ## used for enrichment analysis
 
 ## import the interactions from bedpe file
 p <- system.file("extdata", "WT.2.bedpe",
-                 package = "interactionHub")
+                 package = "GenomicInteractionHub")
 #### please try to replace the connection to your file path
 interactions <- import(con=p, format="bedpe")
 

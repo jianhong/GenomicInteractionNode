@@ -26,7 +26,7 @@ Define the interaction hub from input Pairs.
 \examples{
 library(rtracklayer)
 p <- system.file("extdata", "WT.2.bedpe",
-                 package = "interactionHub")
+                 package = "GenomicInteractionHub")
 interactions <- import(con=p, format="bedpe")
 hubs <- detectHubs(interactions)
 }

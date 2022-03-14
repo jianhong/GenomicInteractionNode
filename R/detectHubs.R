@@ -29,7 +29,7 @@ getAnchor <- function(gr, region, ...){
 #' @examples
 #' library(rtracklayer)
 #' p <- system.file("extdata", "WT.2.bedpe",
-#'                  package = "interactionHub")
+#'                  package = "GenomicInteractionHub")
 #' interactions <- import(con=p, format="bedpe")
 #' hubs <- detectHubs(interactions)
 detectHubs <- function(interaction, pval_cutoff=0.05, ...){
