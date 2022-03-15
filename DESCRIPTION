@@ -1,6 +1,6 @@
 Package: GenomicInteractionHub
 Type: Package
-Version: 0.99.1
+Version: 0.99.2
 Title: A R/Bioconductor package to detect the interaction hub from
        HiC/HiChIP/HiCAR data
 Authors@R: c(person(given="Jianhong", family="Ou", email="jianhong.ou@duke.edu", 

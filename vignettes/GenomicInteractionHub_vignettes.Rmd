@@ -26,8 +26,9 @@ knitr::opts_chunk$set(warning=FALSE, message=FALSE)
 The profiles of genome interactions can be categorized into three levels:
 loops, domains and compartments.
 Cis-regulatory elements (cREs) regulate the distal target gene expression through three-dimensional chromatin looping.
-Most of these loops occur withing the boundaries of topologically
+Most of these loops occur within the boundaries of topologically
 associating domains (TADs).
+The TAD boundaries are enriched for insulator binding proteins.
 HiC analysis revealed the TADs can be segregated into an active (A)
 and inactive (B) compartment. 
 TADs are megabase-sized chromosomal regions where the loop sizes may 
@@ -35,11 +36,23 @@ very from thousand bases to mega bases.
 We know that not all the loops within one TADs are involved in single
 binding platform.
 There are hundreds or even thousands binding platforms even in a single TAD.
+Batut et al. report the 'tethering element' help to establish
+long-range enhancer-promoter interactions.
+Tethering elements are the one kind of the binding platform
+which bring together enhancers and promoters for rapid gene activation.
 For each binding platform, multiple loops may work together to work
-as a single function, such as repress or promote one or more 
+as a single function, such as repression or promotion one or more 
 distal target gene expression.
+That means multiple promoters and enhancers may bind together to perform
+as super enhancer or regulatory elements.
+
 We defined such kind of binding platform as genomic interaction hub or
 interaction hot spot.
+The interaction hub can be a tethering element working as hubs,
+or a super-enhancer (or super regulatory element region).
+It is a level of genome organization higher than loops but smaller than TADs.
+It is a kind of tethering element with multiple interaction loops.
+
 The interaction hub has two attributes:
 1. it must contain multiple interaction loops,
 2. it regulates one or more target genes.
