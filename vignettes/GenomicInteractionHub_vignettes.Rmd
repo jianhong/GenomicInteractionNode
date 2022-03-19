@@ -2,9 +2,9 @@
 title: "GenomicInteractionHub Guide"
 author: "Jianhong Ou, Yu Xiang, Xiaolin Wei, and Yarui Diao"
 date: "`r doc_date()`"
-package: "`r pkg_ver('interactionHub')`"
+package: "`r pkg_ver('GenomicInteractionHub')`"
 vignette: >
-  %\VignetteIndexEntry{interactionHub Vignette}
+  %\VignetteIndexEntry{GenomicInteractionHub Vignette}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 output:
