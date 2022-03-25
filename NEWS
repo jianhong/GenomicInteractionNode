@@ -1,3 +1,5 @@
+# 0.99.5
+- Update the test string from interactionHub to GenomicInteractionHub.
 # 0.99.4
 - Remove the Maintainer line from DESCRIPTION.
 - Update the R depends version to 4.2.0.
