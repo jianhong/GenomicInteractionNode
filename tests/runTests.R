@@ -1,4 +1,4 @@
-require("interactionHub") || stop("unable to load Package:interactionHub")
+require("GenomicInteractionHub") || stop("unable to load Package:GenomicInteractionHub")
 require("TxDb.Hsapiens.UCSC.hg19.knownGene") || 
   stop("unable to load Package:TxDb.Hsapiens.UCSC.hg19.knownGene")
 require("org.Hs.eg.db") || stop("unable to load Package:org.Hs.eg.db")

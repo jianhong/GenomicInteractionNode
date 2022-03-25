@@ -162,7 +162,7 @@ termInfo <-
     onto <- match.arg(onto, choices = c("BP", "CC", "MF"), several.ok = TRUE)
     goAnn <- get(sub(".db", "GO", orgDb$packageName))
     mapped_genes <- mappedkeys(goAnn)
-    totalN.genes=length(unique(mapped_genes))
+    totalN.genes <- length(unique(mapped_genes))
     message("Using `select()` to retreive the GO terms.")
     all.GO <- select(x=orgDb, keys = mapped_genes,
                      columns = c("GO", "ONTOLOGY"),

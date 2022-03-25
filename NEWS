@@ -1,3 +1,6 @@
+# 0.99.4
+- Remove the Maintainer line from DESCRIPTION.
+- Update the R depends version to 4.2.0.
 # 0.99.3
 - Fix the line5 of vignettes.
 # 0.99.2

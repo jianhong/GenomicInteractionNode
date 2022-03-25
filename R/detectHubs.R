@@ -38,7 +38,7 @@ detectHubs <- function(interaction, pval_cutoff=0.05, ...){
   stopifnot("Maximal regions of interaction should be less than 10G"=
               length(regions)<=1e10)
   names(regions) <- paste0("p", seq_along(regions))
-  option_scipen=options(scipen=10) ## maximal interaction number is 1e10
+  option_scipen <- options(scipen=10) ## maximal interaction number is 1e10
   on.exit(options(scipen=option_scipen))
   olm <- data.frame(l=getAnchor(first(interaction), regions),
                     r=getAnchor(second(interaction), regions))
