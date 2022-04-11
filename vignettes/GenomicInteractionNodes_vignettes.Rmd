@@ -1,23 +1,21 @@
 ---
-title: "GenomicInteractionHub Guide"
+title: "GenomicInteractionNodes Guide"
 author: "Jianhong Ou, Yu Xiang, Xiaolin Wei, and Yarui Diao"
 date: "`r doc_date()`"
-package: "`r pkg_ver('GenomicInteractionHub')`"
+package: "`r pkg_ver('GenomicInteractionNodes')`"
 vignette: >
-  %\VignetteIndexEntry{GenomicInteractionHub Vignette}
+  %\VignetteIndexEntry{GenomicInteractionNodes Vignette}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 output:
   BiocStyle::html_document
 ---
 
-```{r, echo=FALSE, results="hide", warning=FALSE}
-suppressPackageStartupMessages({
-  library(GenomicInteractionHub)
-  library(rtracklayer)
-  library(TxDb.Hsapiens.UCSC.hg19.knownGene) 
-  library(org.Hs.eg.db)
-})
+```{r, echo=FALSE, results="hide", warning=FALSE, message=FALSE}
+library(GenomicInteractionNodes)
+library(rtracklayer)
+library(TxDb.Hsapiens.UCSC.hg19.knownGene) 
+library(org.Hs.eg.db)
 knitr::opts_chunk$set(warning=FALSE, message=FALSE)
 ```
 
@@ -25,7 +23,8 @@ knitr::opts_chunk$set(warning=FALSE, message=FALSE)
 
 The profiles of genome interactions can be categorized into three levels:
 loops, domains and compartments.
-Cis-regulatory elements (cREs) regulate the distal target gene expression through three-dimensional chromatin looping.
+Cis-regulatory elements (cREs) regulate the distal target gene expression
+through three-dimensional chromatin looping.
 Most of these loops occur within the boundaries of topologically
 associating domains (TADs).
 The TAD boundaries are enriched for insulator binding proteins.
@@ -46,20 +45,20 @@ distal target gene expression.
 That means multiple promoters and enhancers may bind together to perform
 as super enhancer or regulatory elements.
 
-We defined such kind of binding platform as genomic interaction hub or
+We defined such kind of binding platform as genomic interaction node or
 interaction hot spot.
-The interaction hub can be a tethering element working as hubs,
+The interaction node can be a tethering element working as node,
 or a super-enhancer (or super regulatory element region).
 It is a level of genome organization higher than loops but smaller than TADs.
 It is a kind of tethering element with multiple interaction loops.
 
-The interaction hub has two attributes:
+The interaction node has two attributes:
 1. it must contain multiple interaction loops,
 2. it regulates one or more target genes.
 
-To help users to define the interaction hubs, we developed the 
-`Bioconductor` package: `GenomicInteractionHub`.
-The `GenomicInteractionHub` package will define the interaction hub
+To help users to define the interaction nodes, we developed the 
+`Bioconductor` package: `GenomicInteractionNodes`.
+The `GenomicInteractionNodes` package will define the interaction node
 by testing the involved loops within one connected component
 by Poisson distribution. The annotated loops will be used for 
 enrichment analysis.
@@ -68,30 +67,30 @@ enrichment analysis.
 You can install the package via `devtools::install_github` from `github`.
 ```{r devtoolsInstallation, eval=FALSE}
 library(devtools)
-install_github("jianhong/GenomicInteractionHub")
+install_github("jianhong/GenomicInteractionNodes")
 ```
 
 You can also try to install it via `BiocManager::install` when it is ready in Bioconductor.
 ```{r BiocManagerInstallation, eval=FALSE}
 library(BiocManager)
-install("GenomicInteractionHub")
+install("GenomicInteractionNodes")
 ```
 
 # Quick start
-Here is an example to use `GenomicInteractionHub` to define interaction hubs
+Here is an example to use `GenomicInteractionNodes` to define interaction nodes
 and do downstream enrichment analysis.
 
 There are three steps,
 
-1. `detectHubs`, define the hubs.
+1. `detectNodes`, define the nodes.
 
-2. `annoHubs`, annotate the hubs for downstream analysis.
+2. `annotateNodes`, annotate the nodes for downstream analysis.
 
-3. `enrichAna`, Gene Ontology enrichment analysis.
+3. `enrichmentAnalysis`, Gene Ontology enrichment analysis.
 
 ```{r quickStart}
 ## load library
-library(GenomicInteractionHub)
+library(GenomicInteractionNodes)
 library(rtracklayer)
 library(TxDb.Hsapiens.UCSC.hg19.knownGene) ## for human hg19
 library(org.Hs.eg.db) ## used to convert gene_id to gene_symbol
@@ -99,25 +98,25 @@ library(GO.db) ## used for enrichment analysis
 
 ## import the interactions from bedpe file
 p <- system.file("extdata", "WT.2.bedpe",
-                 package = "GenomicInteractionHub")
+                 package = "GenomicInteractionNodes")
 #### please try to replace the connection to your file path
 interactions <- import(con=p, format="bedpe")
 
-## define the hubs
-hubs <- detectHubs(interactions)
-names(hubs)
-lapply(hubs, head, n=2)
+## define the nodes
+nodes <- detectNodes(interactions)
+names(nodes)
+lapply(nodes, head, n=2)
 
-## annotate the hubs by gene promoters
-hub_regions <- hubs$hub_regions
-hub_regions <- annoHubs(hub_regions,
+## annotate the nodes by gene promoters
+node_regions <- nodes$node_regions
+node_regions <- annotateNodes(node_regions,
                         txdb=TxDb.Hsapiens.UCSC.hg19.knownGene,
                         orgDb=org.Hs.eg.db,
                         upstream=2000, downstream=500)
-head(hub_regions, n=2)
+head(node_regions, n=2)
 
 ## Gene Ontology enrichment analysis
-enrich <- enrichAna(hub_regions, orgDb=org.Hs.eg.db)
+enrich <- enrichmentAnalysis(node_regions, orgDb=org.Hs.eg.db)
 names(enrich$enriched)
 names(enrich$enriched_in_compound)
 res <- enrich$enriched$BP

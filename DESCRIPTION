@@ -1,16 +1,17 @@
-Package: GenomicInteractionHub
+Package: GenomicInteractionNodes
 Type: Package
 Version: 0.99.6
-Title: A R/Bioconductor package to detect the interaction hub from
+Title: A R/Bioconductor package to detect the interaction nodes from
        HiC/HiChIP/HiCAR data
 Authors@R: c(person(given="Jianhong", family="Ou", email="jianhong.ou@duke.edu", 
         role=c("aut", "cre")),
         person(given="Yarui", family="Diao", role="fnd"))
-Description: The GenomicInteractionHub package can import interactions from bedpe file
-        and define the interaction hubs, the genomic interaction sites with
-        multiple interaction loops.
-        The interaction hub is a binding platform regulates one or multiple genes. 
-        The detected interaction hubs will be annotated for downstream validation.
+Description: The GenomicInteractionNodes package can import interactions from
+        bedpe file and define the interaction nodes, the genomic interaction
+        sites with multiple interaction loops.
+        The interaction nodes is a binding platform regulates one or multiple
+        genes. The detected interaction nodes will be annotated for downstream
+        validation.
 License: file LICENSE
 Depends: R (>= 4.2.0), stats
 Imports: AnnotationDbi, graph, GO.db, 
@@ -21,8 +22,8 @@ Imports: AnnotationDbi, graph, GO.db,
         S4Vectors
 Suggests: RUnit, BiocStyle, knitr, rmarkdown, rtracklayer, testthat,
         TxDb.Hsapiens.UCSC.hg19.knownGene, org.Hs.eg.db
-URL: https://github.com/jianhong/GenomicInteractionHub
-BugReports: https://github.com/jianhong/GenomicInteractionHub/issues
+URL: https://github.com/jianhong/GenomicInteractionNodes
+BugReports: https://github.com/jianhong/GenomicInteractionNodes/issues
 biocViews: HiC, Sequencing, Software 
 VignetteBuilder: knitr
 RoxygenNote: 7.1.2

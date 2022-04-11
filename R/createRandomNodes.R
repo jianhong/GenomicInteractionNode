@@ -1,8 +1,8 @@
-#' Create a list of random hubs
-#' @description Generate a list of random hubs used for example or test.
+#' Create a list of random nodes
+#' @description Generate a list of random nodes used for example or test.
 #' @param txdb An TxDb object.
 #' @param seq seqlevels to be kept.
-#' @param size the length of regions involved in hubs
+#' @param size the length of regions involved in nodes
 #' @param upstream,downstream upstream or downstream for promoters
 #' @param maxDist maximal distance from promoters
 #' @param wid regions width.
@@ -14,8 +14,8 @@
 #' @examples 
 #' library(TxDb.Hsapiens.UCSC.hg19.knownGene)
 #' set.seed(123)
-#' hub_regions <- createRandomHubs(TxDb.Hsapiens.UCSC.hg19.knownGene)
-createRandomHubs <- function(txdb, seq="chr22", size=500,
+#' node_regions <- createRandomNodes(TxDb.Hsapiens.UCSC.hg19.knownGene)
+createRandomNodes <- function(txdb, seq="chr22", size=500,
                              upstream=500, downstream=500,
                              maxDist=1e6, wid=5000){
   stopifnot(is(txdb, "TxDb"))

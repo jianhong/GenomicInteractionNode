@@ -4,16 +4,16 @@ getAnchor <- function(gr, region, ...){
   names(region)[subjectHits(ol[match(seq_along(gr), queryHits(ol))])]
 }
 
-#' Detect the interaction hub
-#' @description Define the interaction hub from input Pairs.
+#' Detect the interaction node
+#' @description Define the interaction node from input Pairs.
 #' @param interaction An object of \link[S4Vectors:Pairs-class]{Pairs} to
 #' represent interactions.
-#' @param pval_cutoff Cutoff P value for interaction hub by poisson distribution
+#' @param pval_cutoff Cutoff P value for interaction node by poisson distribution
 #' @param ... Not used.
-#' @return A list of interaction hubs with elements:
-#'  hub_connection, Pairs object represent interactions interacted with hubs;
-#'  hubs, GRanges object represent regions involved in hubs;
-#'  hub_regions, GRanges object represent regions interacted with hubs.
+#' @return A list of interaction nodes with elements:
+#'  node_connection, Pairs object represent interactions interacted with nodes;
+#'  nodes, GRanges object represent regions involved in nodes;
+#'  node_regions, GRanges object represent regions interacted with nodes.
 #' @export
 #' @importMethodsFrom S4Vectors first second mcols mcols<-
 #' @importClassesFrom S4Vectors Pairs Hits
@@ -29,10 +29,10 @@ getAnchor <- function(gr, region, ...){
 #' @examples
 #' library(rtracklayer)
 #' p <- system.file("extdata", "WT.2.bedpe",
-#'                  package = "GenomicInteractionHub")
+#'                  package = "GenomicInteractionNodes")
 #' interactions <- import(con=p, format="bedpe")
-#' hubs <- detectHubs(interactions)
-detectHubs <- function(interaction, pval_cutoff=0.05, ...){
+#' nodes <- detectNodes(interactions)
+detectNodes <- function(interaction, pval_cutoff=0.05, ...){
   stopifnot(is(interaction, "Pairs"))
   regions <- reduce(c(first(interaction), second(interaction)))
   stopifnot("Maximal regions of interaction should be less than 10G"=
@@ -50,7 +50,8 @@ detectHubs <- function(interaction, pval_cutoff=0.05, ...){
   edgeL <- split(olm[,2], olm[,1])
   edgeL <- lapply(edgeL, unique)
   nodes <- names(regions)
-  gR <- new("graphNEL", nodes=nodes, edgeL=edgeL)## there is an issue, the nodes and edgeL have limits
+  ## there is an issue, the nodes and edgeL have limits
+  gR <- new("graphNEL", nodes=nodes, edgeL=edgeL)
   Merged <- connectedComp(ugraph(gR))
   len <- lengths(Merged)
   ## cut by p value, giant component from Erdos-Renyi random graph
@@ -69,29 +70,30 @@ detectHubs <- function(interaction, pval_cutoff=0.05, ...){
   components <- lapply(components, function(.ele) regions[.ele])
   ## get the interactions in the components
   components_ids <- rep(names(components), lengths(components))
-  hub_connection <- unlist(GRangesList(components))
-  hub_connection$comp_id <- components_ids
-  ol <- findOverlaps(hub_connection, interaction)
-  hub_connection <- data.frame(connection_id=subjectHits(ol),
-                               comp_id=hub_connection$comp_id[queryHits(ol)])
-  hub_connection <- unique(hub_connection)
-  hub_conn <- interaction[hub_connection$connection_id]
-  mcols(hub_conn)$comp_id <- hub_connection$comp_id
-  ## find the hub of the interactions
-  sub_group <- c(first(hub_conn), second(hub_conn))
-  sub_group$comp_id <- rep(mcols(hub_conn)$comp_id, 2)
-  hub_regions <- unique(sub_group)
-  ol <- findOverlaps(sub_group, hub_regions, type = "equal")
-  stopifnot("unexpect happend at check point 2: wrong hub number"=
+  node_connection <- unlist(GRangesList(components))
+  node_connection$comp_id <- components_ids
+  ol <- findOverlaps(node_connection, interaction)
+  node_connection <- data.frame(connection_id=subjectHits(ol),
+                                comp_id=node_connection$comp_id[queryHits(ol)])
+  node_connection <- unique(node_connection)
+  node_conn <- interaction[node_connection$connection_id]
+  mcols(node_conn)$comp_id <- node_connection$comp_id
+  ## find the node of the interactions
+  sub_group <- c(first(node_conn), second(node_conn))
+  sub_group$comp_id <- rep(mcols(node_conn)$comp_id, 2)
+  node_regions <- unique(sub_group)
+  ol <- findOverlaps(sub_group, node_regions, type = "equal")
+  stopifnot("unexpect happend at check point 2: wrong node number"=
               length(ol)==length(sub_group))
-  hub_name <- data.frame(hub_region_id=subjectHits(ol),
-                         hub_comp_id=sub_group$comp_id[queryHits(ol)])
-  hub_name_table <- table(hub_name)
-  hub_name <- apply(hub_name_table, 2, which.max, simplify = FALSE)
-  hub_name <- cbind(comp_id=rep(names(hub_name), lengths(hub_name)),
-                    hub_region_id=rownames(hub_name_table)[unlist(hub_name)])
-  mode(hub_name) <- "integer"
-  hubs <- hub_regions[hub_name[, "hub_region_id"]]
-  hubs$comp_id <- hub_name[, "comp_id"]
-  list(hub_connection=hub_conn, hubs=hubs, hub_regions=hub_regions)
+  node_name <- data.frame(node_region_id=subjectHits(ol),
+                          node_comp_id=sub_group$comp_id[queryHits(ol)])
+  node_name_table <- table(node_name)
+  node_name <- apply(node_name_table, 2, which.max, simplify = FALSE)
+  node_name <-
+    cbind(comp_id=rep(names(node_name), lengths(node_name)),
+          node_region_id=rownames(node_name_table)[unlist(node_name)])
+  mode(node_name) <- "integer"
+  nodes <- node_regions[node_name[, "node_region_id"]]
+  nodes$comp_id <- node_name[, "comp_id"]
+  list(node_connection=node_conn, nodes=nodes, node_regions=node_regions)
 }

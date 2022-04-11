@@ -1,14 +1,14 @@
 set.seed(123)
-hub_regions <- 
-  suppressMessages(createRandomHubs(TxDb.Hsapiens.UCSC.hg19.knownGene,
+node_regions <- 
+  suppressMessages(createRandomNodes(TxDb.Hsapiens.UCSC.hg19.knownGene,
                                     upstream=500, downstream=500,
                                     maxDist=1e4))
-sel_comp_id <- sample(unique(hub_regions$comp_id), 3)
+sel_comp_id <- sample(unique(node_regions$comp_id), 3)
 bck_regions <-
-  hub_regions[!hub_regions$comp_id %in% sel_comp_id]
+  node_regions[!node_regions$comp_id %in% sel_comp_id]
 bck_regions <- reduce(bck_regions)
 sel_regions <- 
-  hub_regions[hub_regions$comp_id %in% sel_comp_id]
+  node_regions[node_regions$comp_id %in% sel_comp_id]
 ol <- findOverlaps(sel_regions, drop.redundant=TRUE, drop.self=TRUE)
 sel_regions <- sel_regions[!seq_along(sel_regions) %in%
                              c(queryHits(ol), subjectHits(ol))]
@@ -24,8 +24,8 @@ sel <- lapply(sel, function(.ele){
 })
 sel <- Reduce(c, sel)
 pr <- c(bck, sel)
-test_that("detectHubs works not correct", {
-  dh <- detectHubs(pr)
-  ol <- findOverlaps(dh$hub_regions, sel_regions)
+test_that("detectNodes works not correct", {
+  dh <- detectNodes(pr)
+  ol <- findOverlaps(dh$node_regions, sel_regions)
   expect_true(all(seq_along(sel_regions) %in% subjectHits(ol)))
 })

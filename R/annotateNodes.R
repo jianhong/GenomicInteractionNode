@@ -1,6 +1,6 @@
-#' Annotate hub regions
-#' @description Assigne gene id and gene symbols to hub regions by interacted.
-#' @param hub_regions GRanges object represent regions interacted with hubs. 
+#' Annotate node regions
+#' @description Assigne gene id and gene symbols to node regions by interacted.
+#' @param node_regions GRanges object represent regions interacted with nodes. 
 #' @param txdb An object of \link[GenomicFeatures:TxDb-class]{TxDb} to extract
 #' gene information
 #' @param orgDb An object of \link[AnnotationDbi:AnnotationDb-class]{OrgDb}
@@ -22,33 +22,33 @@
 #' library(TxDb.Hsapiens.UCSC.hg19.knownGene) ## for human hg19
 #' library(org.Hs.eg.db) ## used to convert gene_id to gene_symbol
 #' set.seed(123)
-#' hub_regions <- createRandomHubs(TxDb.Hsapiens.UCSC.hg19.knownGene)
-#' annoHubs(hub_regions, TxDb.Hsapiens.UCSC.hg19.knownGene, org.Hs.eg.db)
+#' node_regions <- createRandomNodes(TxDb.Hsapiens.UCSC.hg19.knownGene)
+#' annotateNodes(node_regions, TxDb.Hsapiens.UCSC.hg19.knownGene, org.Hs.eg.db)
 
-annoHubs <- function(hub_regions,
+annotateNodes <- function(node_regions,
                      txdb, orgDb,
                      upstream=2000,
                      downstream=500, ...){
   stopifnot(is(txdb, "TxDb"))
   stopifnot(is(orgDb, "OrgDb"))
-  stopifnot(is(upstream, "numeric"))
-  stopifnot(is(downstream, "numeric"))
-  check_hub_region(hub_regions, "comp_id")
+  stopifnot(is.numeric(upstream))
+  stopifnot(is.numeric(downstream))
+  check_node_region(node_regions, "comp_id")
   ### annotation for promoter region only
   gene <- genes(txdb, ...)
   promoter <- promoters(gene,
                         upstream=upstream,
                         downstream = downstream)
-  ol <- findOverlaps(hub_regions, promoter)
+  ol <- findOverlaps(node_regions, promoter)
   ol_gene_id <- split(promoter[subjectHits(ol)]$gene_id, queryHits(ol))
   ol_gene_id <- SimpleList(ol_gene_id)
-  hub_regions$gene_id <- SimpleList(NA)
-  hub_regions[as.numeric(names(ol_gene_id))]$gene_id <- ol_gene_id
+  node_regions$gene_id <- SimpleList(NA)
+  node_regions[as.numeric(names(ol_gene_id))]$gene_id <- ol_gene_id
   ol_gene_symbol <- lapply(ol_gene_id, FUN=eg2symbol, orgDb=orgDb)
-  hub_regions$symbols <- SimpleList(NA)
-  hub_regions[as.numeric(names(ol_gene_id))]$symbols <- 
+  node_regions$symbols <- SimpleList(NA)
+  node_regions[as.numeric(names(ol_gene_id))]$symbols <- 
     SimpleList(ol_gene_symbol)
-  hub_regions
+  node_regions
 }
 
 ## help function: add gene symbols

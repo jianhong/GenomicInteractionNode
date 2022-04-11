@@ -1,17 +1,18 @@
 #' Gene ontology enrichment analysis
-#' @description GO enrichment analysis for hubs
-#' @param hub_regions GRanges object represent regions interacted with hubs.
-#' The object must be anaotated by \link{annoHubs} 
+#' @description GO enrichment analysis for nodes
+#' @param node_regions GRanges object represent regions interacted with nodes.
+#' The object must be annotated by \link{annotateNodes} 
 #' with comp_id and gene_id in the metadata. 
 #' @param orgDb An object of \link[AnnotationDbi:AnnotationDb-class]{OrgDb}
 #' to extract gene symbols.
 #' @param onto Ontology category.
 #' @param evidence The acceptable evidence code.
 #' @param minGeneNum An integer(1) value indicating the minimal number of gene
-#' to start the enrichment analysis.
+#' to start the enrichment analysis. If total gene counts is smaller than
+#' the `minGeneNum`, the NULL will be returned.
 #' @param ... Not used.
-#' @return A list with element enriched and enriched_in_compound or NULL if not
-#' enough gene involved.
+#' @return A list with element enriched and enriched_in_compound.
+#' Or NULL if total counts of gene is smaller than `minGeneNum`.
 #' @export
 #' @importClassesFrom AnnotationDbi OrgDb
 #' @importClassesFrom GenomicRanges GRanges
@@ -24,12 +25,14 @@
 #' library(org.Hs.eg.db) ## used to convert gene_id to gene_symbol 
 #' library(GO.db)
 #' set.seed(123)
-#' hub_regions <- createRandomHubs(TxDb.Hsapiens.UCSC.hg19.knownGene)
-#' hub_regions <- 
-#'     annoHubs(hub_regions, TxDb.Hsapiens.UCSC.hg19.knownGene, org.Hs.eg.db)
-#' enr <- enrichAna(hub_regions, org.Hs.eg.db, onto="BP")
+#' node_regions <- createRandomNodes(TxDb.Hsapiens.UCSC.hg19.knownGene)
+#' node_regions <- 
+#'     annotateNodes(node_regions,
+#'                   TxDb.Hsapiens.UCSC.hg19.knownGene,
+#'                   org.Hs.eg.db)
+#' enr <- enrichmentAnalysis(node_regions, org.Hs.eg.db, onto="BP")
 
-enrichAna <- function(hub_regions, orgDb, onto=c("BP", "CC", "MF"),
+enrichmentAnalysis <- function(node_regions, orgDb, onto=c("BP", "CC", "MF"),
                       minGeneNum=3,
                       evidence=list("Experimental_evidence_codes"=
                                       c("EXP", "IDA", "IPI", "IMP", "IGI",
@@ -48,20 +51,20 @@ enrichAna <- function(hub_regions, orgDb, onto=c("BP", "CC", "MF"),
                                       c("IEA")),
                       ...){
   stopifnot(is(orgDb, "OrgDb"))
-  check_hub_region(hub_regions)
+  check_node_region(node_regions)
   onto <- match.arg(onto, choices = c("BP", "CC", "MF"), several.ok = TRUE)
   
-  all_gene_id <- unlist(hub_regions$gene_id)
+  all_gene_id <- unlist(node_regions$gene_id)
   all_gene_id <- unique(all_gene_id[!is.na(all_gene_id)])
   if(length(all_gene_id)<minGeneNum){
     return(NULL)
   }
   ti <- termInfo(orgDb, onto=onto, evidence=evidence)
   ##term info(ti) is a list, named as onto, with dataframe
-  ### for all hubs
+  ### for all nodes
   enrich_all <- lapply(ti, hyperGT, gene_id=all_gene_id, orgDb=orgDb)
-  ### for each hub compound
-  comp_gene_id <- split(hub_regions$gene_id, hub_regions$comp_id)
+  ### for each node compound
+  comp_gene_id <- split(node_regions$gene_id, node_regions$comp_id)
   comp_gene_id <- lapply(comp_gene_id, function(.ele){
     .ele <- unique(unlist(.ele))
     .ele[!is.na(.ele)]
@@ -75,11 +78,11 @@ enrichAna <- function(hub_regions, orgDb, onto=c("BP", "CC", "MF"),
 }
 
 ## enrichment analysis help functions
-check_hub_region <- function(hub_regions, check_col=c("comp_id", "gene_id")){
-  stopifnot(is(hub_regions, "GRanges"))
+check_node_region <- function(node_regions, check_col=c("comp_id", "gene_id")){
+  stopifnot(is(node_regions, "GRanges"))
   for(j in check_col){
-    if(length(hub_regions)!=length(mcols(hub_regions)[, j])){
-      stop("hug_regions does not contain metadata",
+    if(length(node_regions)!=length(mcols(node_regions)[, j])){
+      stop("node_regions does not contain metadata",
            j)
     }
   }
