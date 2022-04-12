@@ -1,3 +1,5 @@
+# 0.99.7
+- Check `seq` argument against TxDb object for `createRandomNodes`.
 # 0.99.6
 - Rename GenomicInteractionHub to GenomicInteractionNodes.
 # 0.99.5

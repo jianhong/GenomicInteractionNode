@@ -10,6 +10,7 @@
 #' @export
 #' @importMethodsFrom GenomicFeatures genes promoters
 #' @importMethodsFrom IRanges shift trim width<-
+#' @importFrom GenomeInfoDb seqlevels
 #' @importFrom GenomicRanges seqnames
 #' @examples 
 #' library(TxDb.Hsapiens.UCSC.hg19.knownGene)
@@ -20,6 +21,8 @@ createRandomNodes <- function(txdb, seq="chr22", size=500,
                              maxDist=1e6, wid=5000){
   stopifnot(is(txdb, "TxDb"))
   stopifnot(is(seq, "character"))
+  stopifnot("Not all input seqlevels in TxDb object"=
+              all(seq %in% seqlevels(txdb)))
   stopifnot(is.numeric(size))
   stopifnot(is.numeric(upstream))
   stopifnot(is.numeric(downstream))

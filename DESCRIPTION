@@ -1,6 +1,6 @@
 Package: GenomicInteractionNodes
 Type: Package
-Version: 0.99.6
+Version: 0.99.7
 Title: A R/Bioconductor package to detect the interaction nodes from
        HiC/HiChIP/HiCAR data
 Authors@R: c(person(given="Jianhong", family="Ou", email="jianhong.ou@duke.edu", 
@@ -15,7 +15,7 @@ Description: The GenomicInteractionNodes package can import interactions from
 License: file LICENSE
 Depends: R (>= 4.2.0), stats
 Imports: AnnotationDbi, graph, GO.db, 
-        GenomicRanges, GenomicFeatures,
+        GenomicRanges, GenomicFeatures, GenomeInfoDb,
         methods,
         IRanges,
         RBGL,
