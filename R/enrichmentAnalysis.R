@@ -16,7 +16,7 @@
 #' @export
 #' @importClassesFrom AnnotationDbi OrgDb
 #' @importClassesFrom GenomicRanges GRanges
-#' @importMethodsFrom AnnotationDbi mappedkeys select
+#' @importMethodsFrom AnnotationDbi mappedkeys select Term Definition
 #' @importFrom stats phyper
 #' @importFrom stats p.adjust
 #' @import GO.db
@@ -192,6 +192,8 @@ hyperGT <- function(df_all, gene_id, orgDb){
   each_term_hits <- split(df_sub$ENTREZID, df_sub$GO)
   each_term_hits_count <- lengths(each_term_hits)
   GO <- names(each_term_hits)
+  term <- Term(GO)
+  definition <- Definition(GO)
   each_term_gene_count <- as.numeric(each_term_gene_count[GO])
   each_term_hits_symbol <- lapply(each_term_hits, FUN=eg2symbol, orgDb=orgDb)
   pvalue <- phyper(q=each_term_hits_count-1,
@@ -199,7 +201,9 @@ hyperGT <- function(df_all, gene_id, orgDb){
                    n=total_gene_count-each_term_gene_count,
                    k=this_gene_count,
                    lower.tail = FALSE, log.p = FALSE)
-  data.frame(GO=GO, 
+  data.frame(GO=GO,
+             term=term,
+             definition=definition,
              pvalue=pvalue,
              fdr=p.adjust(pvalue, method = "BH"),
              countInDataset=each_term_hits_count,
