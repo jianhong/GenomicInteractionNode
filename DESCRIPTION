@@ -1,6 +1,6 @@
 Package: GenomicInteractionNodes
 Type: Package
-Version: 1.4.0
+Version: 1.5.0
 Title: A R/Bioconductor package to detect the interaction nodes from
        HiC/HiChIP/HiCAR data
 Authors@R: c(person(given="Jianhong", family="Ou", email="jianhong.ou@duke.edu", 
