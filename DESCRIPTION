@@ -1,9 +1,9 @@
 Package: GenomicInteractionNodes
 Type: Package
-Version: 1.11.0
+Version: 1.11.1
 Title: A R/Bioconductor package to detect the interaction nodes from
        HiC/HiChIP/HiCAR data
-Authors@R: c(person(given="Jianhong", family="Ou", email="jianhong.ou@duke.edu", 
+Authors@R: c(person(given="Jianhong", family="Ou", email="jou@morgridge.org", 
         role=c("aut", "cre")),
         person(given="Yarui", family="Diao", role="fnd"))
 Description: The GenomicInteractionNodes package can import interactions from
@@ -26,5 +26,5 @@ URL: https://github.com/jianhong/GenomicInteractionNodes
 BugReports: https://github.com/jianhong/GenomicInteractionNodes/issues
 biocViews: HiC, Sequencing, Software 
 VignetteBuilder: knitr
-RoxygenNote: 7.1.2
+RoxygenNote: 7.3.2
 Encoding: UTF-8

@@ -12,7 +12,7 @@ getAnchor <- function(gr, region, ...){
 #' @param ... Not used.
 #' @return A list of interaction nodes with elements:
 #'  node_connection, Pairs object represent interactions interacted with nodes;
-#'  nodes, GRanges object represent regions involved in nodes;
+#'  nodes, GRanges object represent regions with maximal interactions involved in nodes;
 #'  node_regions, GRanges object represent regions interacted with nodes.
 #' @export
 #' @importMethodsFrom S4Vectors first second mcols mcols<-
