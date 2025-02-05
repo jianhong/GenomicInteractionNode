@@ -39,6 +39,12 @@ detectNodes <- function(interaction, pval_cutoff=0.05, ...){
               length(regions)<=1e10)
   names(regions) <- paste0("p", seq_along(regions))
   option_scipen <- options(scipen=10) ## maximal interaction number is 1e10
+  if(is.list(option_scipen)){
+    option_scipen <- option_scipen$scipen
+  }
+  if(!is.numeric(option_scipen)){
+    option_scipen <- 0
+  }
   on.exit(options(scipen=option_scipen))
   olm <- data.frame(l=getAnchor(first(interaction), regions),
                     r=getAnchor(second(interaction), regions))
