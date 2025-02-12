@@ -10,7 +10,7 @@ detectNodes(interaction, pval_cutoff = 0.05, ...)
 \item{interaction}{An object of \link[S4Vectors:Pairs-class]{Pairs} to
 represent interactions.}
 
-\item{pval_cutoff}{Cutoff P value for interaction node by poisson distribution}
+\item{pval_cutoff}{Cutoff P value for interaction node by Poisson distribution}
 
 \item{...}{Not used.}
 }

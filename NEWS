@@ -1,25 +1,92 @@
-# 1.11.2
-- Fix the error "invalid 'scipen'". 
-# 1.11.1
-- Update email address. 
-# 0.99.8
-- Add terms and definition for GO enrichment results. 
-# 0.99.7
-- Check `seq` argument against TxDb object for `createRandomNodes`.
-# 0.99.6
-- Rename GenomicInteractionHub to GenomicInteractionNodes.
-# 0.99.5
-- Update the test string from interactionHub to GenomicInteractionHub.
-# 0.99.4
-- Remove the Maintainer line from DESCRIPTION.
-- Update the R depends version to 4.2.0.
-# 0.99.3
-- Fix the line5 of vignettes.
-# 0.99.2
-- Update the documentation.
-# 0.99.1
-- rename the package.
-# 0.99.0
-- prepare for submission.
-# 0.0.1
-- initial the package.
+CHANGES IN VERSION 1.11.3
+-------------------------
+
+BUG FIXES
+  
+  o Fix multiple typos. 
+
+
+CHANGES IN VERSION 1.11.2
+-------------------------
+
+BUG FIXES
+  
+  o Fix the error "invalid 'scipen'". 
+
+CHANGES IN VERSION 1.11.1
+-------------------------
+
+BUG FIXES
+  
+  o Update email address. 
+
+CHANGES IN VERSION 0.99.8
+-------------------------
+
+NEW FEATURES
+  
+  o  Add terms and definition for GO enrichment results. 
+  
+CHANGES IN VERSION 0.99.7
+-------------------------
+
+NEW FEATURES
+  
+  o  Check `seq` argument against TxDb object for `createRandomNodes`.
+
+CHANGES IN VERSION 0.99.6
+-------------------------
+
+SIGNIFICANT USER-VISIBLE CHANGES
+  
+  o Rename GenomicInteractionHub to GenomicInteractionNodes.
+
+CHANGES IN VERSION 0.99.5
+-------------------------
+
+NEW FEATURES
+  
+  o  Update the test string from interactionHub to GenomicInteractionHub.
+
+CHANGES IN VERSION 0.99.4
+-------------------------
+
+BUG FIXES
+  
+  o Remove the Maintainer line from DESCRIPTION.
+  o Update the R depends version to 4.2.0.
+  
+CHANGES IN VERSION 0.99.3
+-------------------------
+
+BUG FIXES
+  
+  o Fix the line5 of vignettes.
+
+CHANGES IN VERSION 0.99.2
+-------------------------
+
+BUG FIXES
+  
+  o Update the documentation.
+
+CHANGES IN VERSION 0.99.1
+-------------------------
+
+BUG FIXES
+  
+  o rename the package.
+
+CHANGES IN VERSION 0.99.0
+-------------------------
+
+NEW FEATURES
+  
+  o  prepare for submission.
+
+CHANGES IN VERSION 0.0.1
+-------------------------
+
+NEW FEATURES
+  
+  o  initial the package.

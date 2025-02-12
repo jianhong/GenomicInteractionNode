@@ -8,7 +8,7 @@ getAnchor <- function(gr, region, ...){
 #' @description Define the interaction node from input Pairs.
 #' @param interaction An object of \link[S4Vectors:Pairs-class]{Pairs} to
 #' represent interactions.
-#' @param pval_cutoff Cutoff P value for interaction node by poisson distribution
+#' @param pval_cutoff Cutoff P value for interaction node by Poisson distribution
 #' @param ... Not used.
 #' @return A list of interaction nodes with elements:
 #'  node_connection, Pairs object represent interactions interacted with nodes;

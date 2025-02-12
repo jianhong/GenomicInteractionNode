@@ -33,7 +33,7 @@ details see \link[GenomicFeatures:transcripts]{promoters}.}
 GRanges object with gene_id and symbols metadata.
 }
 \description{
-Assigne gene id and gene symbols to node regions by interacted.
+Assign gene id and gene symbols to node regions by interacted.
 }
 \examples{
 library(TxDb.Hsapiens.UCSC.hg19.knownGene) ## for human hg19

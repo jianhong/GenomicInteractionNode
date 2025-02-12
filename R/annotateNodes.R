@@ -1,5 +1,5 @@
 #' Annotate node regions
-#' @description Assigne gene id and gene symbols to node regions by interacted.
+#' @description Assign gene id and gene symbols to node regions by interacted.
 #' @param node_regions GRanges object represent regions interacted with nodes. 
 #' @param txdb An object of \link[GenomicFeatures:TxDb-class]{TxDb} to extract
 #' gene information
